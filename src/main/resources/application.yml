@@ -1,6 +1,12 @@
 spring:
   application:
     name: boot-eureka
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 1MB
+      max-request-size: 10MB
+      location: /data/boot/eureka/temp
   security:
     user:
       password: boot
@@ -27,11 +33,27 @@ eureka:
     eureka-service-url-poll-interval-seconds: 60
     # 定义从注册中心获取注册服务的信息
     registry-fetch-interval-seconds: 5
-    # 集群节点之间读取超时时间。单位：毫秒
     server:
-      peerNodeReadTimeoutMs: 30000
+      # 集群节点之间读取超时时间。单位：毫秒
+      peer-node-read-timeout-ms: 30000
       # 集群之间相互更新节点信息的时间频率
       peer-eureka-nodes-update-interval-ms: 60000
 
 server:
   port: 11101
+  undertow:
+    accesslog:
+      enabled: false
+      dir: logs
+    direct-buffers: true
+    buffer-size: 1024
+    url-charset: UTF-8
+    threads:
+      io: 8
+      worker: 64
+
+
+logging:
+  config: classpath:logback-spring.xml
+
+
